@@ -49,3 +49,84 @@ ExplosionBtn.addEventListener("dblclick", function(){
     }
 bootstrapEnabled = !bootstrapEnabled;
 });
+
+//Fonctionnalité 6 : Impression et recul
+let cards = document.querySelectorAll("div.card");
+
+for (let card of cards) { 
+  let CardImg = card.firstElementChild;
+  let cardBody = card.childNodes[3];
+  let p = cardBody.firstElementChild;
+  let viewBtn = cardBody.childNodes[3].firstElementChild.firstElementChild;
+  let reduceCard = function(){
+    p.classList.toggle("collapse");
+    if (CardImg.style.width === "20%"){
+        CardImg.style.width = "";
+    } else {
+        CardImg.style.width = "20%";
+    } 
+  }
+  viewBtn.addEventListener("mouseover",reduceCard);
+};
+
+//Fonctionnalité 7 : La fléche qui flèche
+
+let mainRow = document.getElementsByClassName("row")[1];
+let arrowRight = document.querySelectorAll("a.btn-secondary")[0];
+
+let moveCardRight = function(event){
+  event.preventDefault();
+  let card1 = mainRow.children[0];
+  let card6 = mainRow.children[5];
+  mainRow.insertBefore(card6,card1);
+}
+arrowRight.addEventListener("click",moveCardRight);
+
+//Fonctionnalité 8 : La fléche qui flèche a l'envers
+
+let arrowLeft = document.querySelectorAll("a.btn-primary")[0];
+let moveCardLeft = function(event){
+  event.preventDefault();
+  let card1 = mainRow.children[0];
+  let card6 = mainRow.children[5];
+  mainRow.insertBefore(card1,null);
+}
+arrowLeft.addEventListener("click",moveCardLeft);
+
+//Fonctionnalité 9 : La vue qui pars dans tous les sens
+
+let body = document.getElementsByTagName("body")[0];
+console.log(body);
+let logo = document.querySelector("a.navbar-brand");
+console.log(logo);
+let selectLogo = function(event){
+  event.preventDefault();
+  console.log("Je clique sur le logo");
+  console.log(event);
+}
+let moveBody = function(move) {
+  move.preventDefault();
+  console.log("je touche : " + move.key);
+  body.className = "";
+  switch(move.key) {
+  case "a":
+    body.classList.add("col-4");
+  break;
+  case "y":
+    body.classList.add("col-4");
+    body.classList.add("offset-md-4");
+  break;
+  case "p":
+    body.classList.add("col-4");
+    body.classList.add("offset-md-8");
+  break;
+  case "b":
+    body.className = "";
+  break;
+  default:
+    console.log("Choisi entre 'a','y','p' ou 'b'");
+  break;  
+  }
+};
+logo.addEventListener("click",selectLogo);
+logo.addEventListener("keypress",moveBody);
